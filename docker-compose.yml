@@ -1,0 +1,22 @@
+services:
+  backend:
+    build:
+      context: ../mindkeeper/backend
+      dockerfile: Dockerfile  # ← добавь эту строку, если файл называется иначе
+    container_name: mindkeeper-backend
+    ports:
+      - "4000:4000"
+    env_file:
+      - ../mindkeeper/backend/.env
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ../mindkeeper/frontend
+      dockerfile: Dockerfile  # ← добавь эту строку
+    container_name: mindkeeper-frontend
+    ports:
+      - "5173:80"
+    depends_on:
+      - backend
+    restart: unless-stopped
